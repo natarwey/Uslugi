@@ -11,6 +11,8 @@
     <Grid>
         <TextBlock Text="КЛИЕНТЫ" FontSize="25" HorizontalAlignment="Center" Margin="0,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
+        <ComboBox x:Name="GenderComboBox" SelectionChanged="GenderComboBox_SelectionChanged" Width="200" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,50,20,0" />
+
         <DataGrid x:Name="dataClient" AutoGenerateColumns="False" HorizontalAlignment="Center" Height="250" VerticalAlignment="Center" Width="800">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Path=id}" Width="*" />

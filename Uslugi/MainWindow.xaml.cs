@@ -29,13 +29,39 @@ namespace Uslugi
         public MainWindow()
         {
             InitializeComponent();
+            LoadGenders();
+            Load_Client(null, null); // Загрузка данных при запуске
+        }
+
+        private void LoadGenders()
+        {
+            var genders = _connection.Gender.ToList();
+            genders.Insert(0, new Gender { Name = "Все" }); // Добавляем опцию "Все"
+            GenderComboBox.ItemsSource = genders;
+            GenderComboBox.DisplayMemberPath = "Name";
+            GenderComboBox.SelectedValuePath = "Code";
+            GenderComboBox.SelectedIndex = 0; // Выбираем "Все" по умолчанию
+        }
+
+        private void GenderComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Load_Client(sender, e);
         }
 
         private void Load_Client(object sender, RoutedEventArgs e)
         {
+            var selectedGender = GenderComboBox.SelectedItem as Gender;
+            var genderCode = selectedGender?.Code;
 
-            var gend = _connection.Client
-                .ToArray();
+            var clientsQuery = _connection.Client.AsQueryable();
+
+            if (genderCode != null && selectedGender.Name != "Все")
+            {
+                clientsQuery = clientsQuery.Where(x => x.GenderCode == genderCode);
+            }
+
+
+            var gend = clientsQuery.ToArray();
             visits = _connection.Visit.ToList();
 
             dataClient.ItemsSource = gend.Select(x => new
