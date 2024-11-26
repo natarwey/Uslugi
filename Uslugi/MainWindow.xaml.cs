@@ -32,14 +32,21 @@ namespace Uslugi
 
         private void Load_Client(object sender, RoutedEventArgs e)
         {
+            _gender = _connection.Gender.FirstOrDefault();
+            if (_gender == null)
+            {
+                MessageBox.Show("Пол не найден.");
+                return;
+            }
+
             var gend = _connection.Client
-                .Where(x => Gender.Code == x.GenderCode)
+                .Where(x => _gender.Code == x.GenderCode)
                 .ToArray();
 
 
             dataClient.ItemsSource = gend.Select(x => new
             {
-                id = x.id,
+                id = x.ID,
                 gender = x.Gender.Name,
                 firstName = x.FirstName,
                 lastName = x.LastName,
