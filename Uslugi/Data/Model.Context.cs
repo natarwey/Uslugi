@@ -38,5 +38,6 @@ namespace Uslugi.Data
         public virtual DbSet<ServicePhoto> ServicePhoto { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Tag> Tag { get; set; }
+        public virtual DbSet<Visit> Visit { get; set; }
     }
 }

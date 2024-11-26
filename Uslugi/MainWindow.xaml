@@ -22,9 +22,8 @@
                 <DataGridTextColumn Header="Телефон" Binding="{Binding Path=phone}" Width="*" />
                 <DataGridTextColumn Header="Эл. почта" Binding="{Binding Path=email}" Width="*" />
                 <DataGridTextColumn Header="Дата добавления" Binding="{Binding Path=registrationDate}" Width="*" />
-                <!--<DataGridTextColumn Header="Дата последнего посещения" Binding="{Binding Path=}" Width="*" />
-                <DataGridTextColumn Header="Количество посещений" Binding="{Binding Path=}" Width="*" />
-                <DataGridTextColumn Header="Список тегов" Binding="{Binding Path=}" Width="*" />-->
+                <!--<DataGridTextColumn Header="Дата последнего посещения" Binding="{Binding Path=lastDate}" Width="*" />-->
+                <!--<DataGridTextColumn Header="Количество посещений" Binding="{Binding Path=}" Width="*" />-->
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

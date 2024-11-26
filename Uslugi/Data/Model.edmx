@@ -146,6 +146,14 @@
           <Property Name="ClientID" Type="int" Nullable="false" />
           <Property Name="TagID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Visit">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Id_client" Type="int" Nullable="false" />
+        </EntityType>
         <Association Name="FK_AttachedProduct_Product">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="AttachedProduct" Type="Self.AttachedProduct" Multiplicity="*" />
@@ -302,6 +310,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Visit_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Visit" Type="Self.Visit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Visit">
+              <PropertyRef Name="Id_client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Хранилище Yslygi_MDKModelContainer">
           <EntitySet Name="AttachedProduct" EntityType="Self.AttachedProduct" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
@@ -318,6 +338,7 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tag" EntityType="Self.Tag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TagOfClient" EntityType="Self.TagOfClient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Visit" EntityType="Self.Visit" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_AttachedProduct_Product" Association="Self.FK_AttachedProduct_Product">
             <End Role="Product" EntitySet="Product" />
             <End Role="AttachedProduct" EntitySet="AttachedProduct" />
@@ -370,6 +391,10 @@
             <End Role="Tag" EntitySet="Tag" />
             <End Role="TagOfClient" EntitySet="TagOfClient" />
           </AssociationSet>
+          <AssociationSet Name="FK_Visit_Client" Association="Self.FK_Visit_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Visit" EntitySet="Visit" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
@@ -392,6 +417,7 @@
           <Property Name="PhotoPath" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Gender" Relationship="Self.FK_Client_Gender" FromRole="Client" ToRole="Gender" />
           <NavigationProperty Name="ClientService" Relationship="Self.FK_ClientService_Client" FromRole="Client" ToRole="ClientService" />
+          <NavigationProperty Name="Visit" Relationship="Self.FK_Visit_Client" FromRole="Client" ToRole="Visit" />
           <NavigationProperty Name="Tag" Relationship="Self.TagOfClient" FromRole="Client" ToRole="Tag" />
         </EntityType>
         <EntityType Name="ClientService">
@@ -523,6 +549,15 @@
           <Property Name="Color" Type="String" MaxLength="6" FixedLength="true" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Client" Relationship="Self.TagOfClient" FromRole="Tag" ToRole="Client" />
         </EntityType>
+        <EntityType Name="Visit">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Id_client" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Visit_Client" FromRole="Visit" ToRole="Client" />
+        </EntityType>
         <Association Name="FK_Client_Gender">
           <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
           <End Role="Client" Type="Self.Client" Multiplicity="*" />
@@ -544,6 +579,18 @@
             </Principal>
             <Dependent Role="ClientService">
               <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visit_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Visit" Type="Self.Visit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Visit">
+              <PropertyRef Name="Id_client" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -653,6 +700,7 @@
           <EntitySet Name="ServicePhoto" EntityType="Self.ServicePhoto" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Tag" EntityType="Self.Tag" />
+          <EntitySet Name="Visit" EntityType="Self.Visit" />
           <AssociationSet Name="FK_Client_Gender" Association="Self.FK_Client_Gender">
             <End Role="Gender" EntitySet="Gender" />
             <End Role="Client" EntitySet="Client" />
@@ -660,6 +708,10 @@
           <AssociationSet Name="FK_ClientService_Client" Association="Self.FK_ClientService_Client">
             <End Role="Client" EntitySet="Client" />
             <End Role="ClientService" EntitySet="ClientService" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visit_Client" Association="Self.FK_Visit_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Visit" EntitySet="Visit" />
           </AssociationSet>
           <AssociationSet Name="FK_ClientService_Service" Association="Self.FK_ClientService_Service">
             <End Role="Service" EntitySet="Service" />
@@ -839,6 +891,15 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Color" ColumnName="Color" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Visit">
+            <EntityTypeMapping TypeName="Yslygi_MDKModel.Visit">
+              <MappingFragment StoreEntitySet="Visit">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Id_client" ColumnName="Id_client" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

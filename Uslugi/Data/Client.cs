@@ -18,6 +18,7 @@ namespace Uslugi.Data
         public Client()
         {
             this.ClientService = new HashSet<ClientService>();
+            this.Visit = new HashSet<Visit>();
             this.Tag = new HashSet<Tag>();
         }
     
@@ -35,6 +36,8 @@ namespace Uslugi.Data
         public virtual Gender Gender { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ClientService> ClientService { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Visit> Visit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tag> Tag { get; set; }
     }

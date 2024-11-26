@@ -23,7 +23,6 @@ namespace Uslugi
     public partial class MainWindow : Window
     {
         private static Yslygi_MDKEntities _connection = new Yslygi_MDKEntities();
-        private Gender _gender;
 
         public MainWindow()
         {
@@ -32,15 +31,8 @@ namespace Uslugi
 
         private void Load_Client(object sender, RoutedEventArgs e)
         {
-            _gender = _connection.Gender.FirstOrDefault();
-            if (_gender == null)
-            {
-                MessageBox.Show("Пол не найден.");
-                return;
-            }
 
             var gend = _connection.Client
-                .Where(x => _gender.Code == x.GenderCode)
                 .ToArray();
 
 
@@ -54,7 +46,8 @@ namespace Uslugi
                 birthday = x.Birthday,
                 phone = x.Phone,
                 email = x.Email,
-                registrationDate = x.RegistrationDate
+                registrationDate = x.RegistrationDate,
+                //lastDate = 
             });
         }
     }
