@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
@@ -23,6 +24,7 @@ namespace Uslugi
     public partial class MainWindow : Window
     {
         private static Yslygi_MDKEntities _connection = new Yslygi_MDKEntities();
+        private List<Visit> visits;
 
         public MainWindow()
         {
@@ -34,7 +36,7 @@ namespace Uslugi
 
             var gend = _connection.Client
                 .ToArray();
-
+            visits = _connection.Visit.ToList();
 
             dataClient.ItemsSource = gend.Select(x => new
             {
@@ -46,9 +48,10 @@ namespace Uslugi
                 birthday = x.Birthday,
                 phone = x.Phone,
                 email = x.Email,
-                registrationDate = x.RegistrationDate,
-                //lastDate = 
-            });
+                registrationDate = x.RegistrationDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                lastDate = x.Visit.Any() ? x.Visit.OrderByDescending(v => v.Date).FirstOrDefault()?.Date.ToString("yyyy-MM-dd HH:mm:ss") : x.RegistrationDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                countVisit = visits.Where(y => y.Id_client == x.ID).Count() == 0 ? 1 : visits.Where(y => y.Id_client == x.ID).Count() + 1,
+            }) ;
         }
     }
 }

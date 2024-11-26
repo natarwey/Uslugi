@@ -11,7 +11,7 @@
     <Grid>
         <TextBlock Text="КЛИЕНТЫ" FontSize="25" HorizontalAlignment="Center" Margin="0,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
-        <DataGrid x:Name="dataClient" AutoGenerateColumns="False" HorizontalAlignment="Center" Height="250" VerticalAlignment="Center" Width="700">
+        <DataGrid x:Name="dataClient" AutoGenerateColumns="False" HorizontalAlignment="Center" Height="250" VerticalAlignment="Center" Width="800">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Path=id}" Width="*" />
                 <DataGridTextColumn Header="Пол" Binding="{Binding Path=gender}" Width="*" />
@@ -22,8 +22,8 @@
                 <DataGridTextColumn Header="Телефон" Binding="{Binding Path=phone}" Width="*" />
                 <DataGridTextColumn Header="Эл. почта" Binding="{Binding Path=email}" Width="*" />
                 <DataGridTextColumn Header="Дата добавления" Binding="{Binding Path=registrationDate}" Width="*" />
-                <!--<DataGridTextColumn Header="Дата последнего посещения" Binding="{Binding Path=lastDate}" Width="*" />-->
-                <!--<DataGridTextColumn Header="Количество посещений" Binding="{Binding Path=}" Width="*" />-->
+                <DataGridTextColumn Header="Дата последнего посещения" Binding="{Binding Path=lastDate}" Width="*" />
+                <DataGridTextColumn Header="Количество посещений" Binding="{Binding Path=countVisit}" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
