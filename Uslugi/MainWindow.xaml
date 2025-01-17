@@ -7,13 +7,22 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         Loaded="Load_Client">
-    
+
     <Grid>
         <TextBlock Text="КЛИЕНТЫ" FontSize="25" HorizontalAlignment="Center" Margin="0,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
+        <TextBox x:Name="SearchTextBox" TextChanged="SearchTextBox_TextChanged" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,50,0,0"/>
+
         <ComboBox x:Name="GenderComboBox" SelectionChanged="GenderComboBox_SelectionChanged" Width="200" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,50,20,0" />
 
-        <DataGrid x:Name="dataClient" AutoGenerateColumns="False" HorizontalAlignment="Center" Height="250" VerticalAlignment="Center" Width="800">
+        <ComboBox x:Name="SortComboBox" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,90,0,0" SelectedIndex="0">
+            <ComboBoxItem Content="Фамилия (А-Я)" />
+            <ComboBoxItem Content="Дата последнего посещения (новые)" />
+            <ComboBoxItem Content="Количество посещений (по убыванию)" />
+        </ComboBox>
+        <Button x:Name="SortButton" Content="Сортировать" Width="100" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="230,90,0,0" Click="SortButton_Click" />
+        
+        <DataGrid x:Name="dataClient" AutoGenerateColumns="False" HorizontalAlignment="Center" Height="250" VerticalAlignment="Top" Width="800" Margin="0,130,0,0">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Path=id}" Width="*" />
                 <DataGridTextColumn Header="Пол" Binding="{Binding Path=gender}" Width="*" />

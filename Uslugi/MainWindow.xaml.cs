@@ -30,20 +30,25 @@ namespace Uslugi
         {
             InitializeComponent();
             LoadGenders();
-            Load_Client(null, null); // Загрузка данных при запуске
+            Load_Client(null, null);
         }
 
         private void LoadGenders()
         {
             var genders = _connection.Gender.ToList();
-            genders.Insert(0, new Gender { Name = "Все" }); // Добавляем опцию "Все"
+            genders.Insert(0, new Gender { Name = "Все" });
             GenderComboBox.ItemsSource = genders;
             GenderComboBox.DisplayMemberPath = "Name";
             GenderComboBox.SelectedValuePath = "Code";
-            GenderComboBox.SelectedIndex = 0; // Выбираем "Все" по умолчанию
+            GenderComboBox.SelectedIndex = 0;
         }
 
         private void GenderComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Load_Client(sender, e);
+        }
+
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             Load_Client(sender, e);
         }
@@ -60,11 +65,22 @@ namespace Uslugi
                 clientsQuery = clientsQuery.Where(x => x.GenderCode == genderCode);
             }
 
+            var searchText = SearchTextBox.Text.ToLower();
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                clientsQuery = clientsQuery.Where(x =>
+                    x.FirstName.ToLower().Contains(searchText) ||
+                    x.LastName.ToLower().Contains(searchText) ||
+                    x.Patronymic.ToLower().Contains(searchText) ||
+                    x.Email.ToLower().Contains(searchText) ||
+                    x.Phone.ToLower().Contains(searchText)
+                );
+            }
 
             var gend = clientsQuery.ToArray();
             visits = _connection.Visit.ToList();
 
-            dataClient.ItemsSource = gend.Select(x => new
+            var clients = gend.Select(x => new
             {
                 id = x.ID,
                 gender = x.Gender.Name,
@@ -78,6 +94,36 @@ namespace Uslugi
                 lastDate = x.Visit.Any() ? x.Visit.OrderByDescending(v => v.Date).FirstOrDefault()?.Date.ToString("yyyy-MM-dd HH:mm:ss") : x.RegistrationDate.ToString("yyyy-MM-dd HH:mm:ss"),
                 countVisit = visits.Where(y => y.Id_client == x.ID).Count() == 0 ? 1 : visits.Where(y => y.Id_client == x.ID).Count() + 1,
             }) ;
+
+            dataClient.ItemsSource = clients;
+        }
+
+        private void SortButton_Click(object sender, RoutedEventArgs e)
+        {
+            var clients = dataClient.ItemsSource.Cast<object>().ToList();
+            
+            var selectedSort = SortComboBox.SelectedItem as ComboBoxItem;
+            if (selectedSort != null)
+            {
+                switch (selectedSort.Content.ToString())
+                {
+                    case "Фамилия (А-Я)":
+                        clients = clients.OrderBy(x => GetPropertyValue(x, "firstName")).ToList();
+                        break;
+                    case "Дата последнего посещения (новые)":
+                        clients = clients.OrderByDescending(x => DateTime.Parse(GetPropertyValue(x, "lastDate").ToString())).ToList();
+                        break;
+                    case "Количество посещений (по убыванию)":
+                        clients = clients.OrderByDescending(x => (int)GetPropertyValue(x, "countVisit")).ToList();
+                        break;
+                }
+
+                dataClient.ItemsSource = clients;
+            }
+        }
+        private object GetPropertyValue(object obj, string propertyName)
+        {
+            return obj.GetType().GetProperty(propertyName).GetValue(obj, null);
         }
     }
 }
