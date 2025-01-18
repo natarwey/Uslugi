@@ -15,6 +15,11 @@
 
         <ComboBox x:Name="GenderComboBox" SelectionChanged="GenderComboBox_SelectionChanged" Width="200" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,50,20,0" />
 
+        <ComboBox x:Name="BirthdayComboBox" Width="200" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,90,20,0" SelectionChanged="BirthdayComboBox_SelectionChanged">
+            <ComboBoxItem Content="Показать всех клиентов" />
+            <ComboBoxItem Content="Показать дни рождения в этом месяце" />
+        </ComboBox>
+                
         <ComboBox x:Name="SortComboBox" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,90,0,0" SelectedIndex="0">
             <ComboBoxItem Content="Фамилия (А-Я)" />
             <ComboBoxItem Content="Дата последнего посещения (новые)" />

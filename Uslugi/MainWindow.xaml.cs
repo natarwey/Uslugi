@@ -48,6 +48,11 @@ namespace Uslugi
             Load_Client(sender, e);
         }
 
+        private void BirthdayComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Load_Client(sender, e);
+        }
+
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             Load_Client(sender, e);
@@ -77,6 +82,12 @@ namespace Uslugi
                 );
             }
 
+            if (BirthdayComboBox.SelectedItem is ComboBoxItem selectedItem && selectedItem.Content.ToString() == "Показать дни рождения в этом месяце")
+            {
+                int currentMonth = DateTime.Now.Month;
+                clientsQuery = clientsQuery.Where(x => x.Birthday.HasValue && x.Birthday.Value.Month == currentMonth);
+            }
+
             var gend = clientsQuery.ToArray();
             visits = _connection.Visit.ToList();
 
@@ -87,11 +98,11 @@ namespace Uslugi
                 firstName = x.FirstName,
                 lastName = x.LastName,
                 patronymic = x.Patronymic,
-                birthday = x.Birthday,
+                birthday = x.Birthday?.ToString("dd-MM-yyyy") ?? "Не указано",
                 phone = x.Phone,
                 email = x.Email,
-                registrationDate = x.RegistrationDate.ToString("yyyy-MM-dd HH:mm:ss"),
-                lastDate = x.Visit.Any() ? x.Visit.OrderByDescending(v => v.Date).FirstOrDefault()?.Date.ToString("yyyy-MM-dd HH:mm:ss") : x.RegistrationDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                registrationDate = x.RegistrationDate.ToString("dd-MM-yyyy HH:mm:ss"),
+                lastDate = x.Visit.Any() ? x.Visit.OrderByDescending(v => v.Date).FirstOrDefault()?.Date.ToString("dd-MM-yyyy HH:mm:ss") : x.RegistrationDate.ToString("dd-MM-yyyy HH:mm:ss"),
                 countVisit = visits.Where(y => y.Id_client == x.ID).Count() == 0 ? 1 : visits.Where(y => y.Id_client == x.ID).Count() + 1,
             }) ;
 
