@@ -125,5 +125,37 @@ namespace Uslugi
         {
             return obj.GetType().GetProperty(propertyName).GetValue(obj, null);
         }
+
+        private void AddClientButton_Click(object sender, RoutedEventArgs e)
+        {
+            var clientForm = new ClientFormWindow();
+            if (clientForm.ShowDialog() == true)
+            {
+                Load_Client(null, null);
+            }
+        }
+
+        private void EditClientButton_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedClient = dataClient.SelectedItem as dynamic;
+            if (selectedClient == null)
+            {
+                MessageBox.Show("Выберите клиента для редактирования.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            var client = _connection.Client.Find(selectedClient.id);
+            if (client == null)
+            {
+                MessageBox.Show("Клиент не найден.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            var clientForm = new ClientFormWindow(client);
+            if (clientForm.ShowDialog() == true)
+            {
+                Load_Client(null, null);
+            }
+        }
     }
 }

@@ -37,5 +37,9 @@
                 <DataGridTextColumn Header="Количество посещений" Binding="{Binding Path=countVisit}" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
+
+        <Button x:Name="AddClientButton" Content="Добавить клиента" Width="120" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,10,0,0" Click="AddClientButton_Click"/>
+        <Button x:Name="EditClientButton" Content="Редактировать клиента" Width="150" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="150,10,0,0" Click="EditClientButton_Click"/>
+        
     </Grid>
 </Window>
