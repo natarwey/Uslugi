@@ -6,28 +6,37 @@
         xmlns:local="clr-namespace:Uslugi"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
-        Loaded="Load_Client">
+        Loaded="Load_Client"
+        Icon="Resources/logo.png"
+        FontFamily="Tahoma">
 
-    <Grid>
-        <TextBlock Text="КЛИЕНТЫ" FontSize="25" HorizontalAlignment="Center" Margin="0,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+    <Grid Background="White">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0">
+            <Image Source="Resources/logo.png" Width="40" Height="40" Margin="0,0,10,0" />
+            <TextBlock Text="КЛИЕНТЫ" FontSize="25" VerticalAlignment="Center" />
+        </StackPanel>
 
-        <TextBox x:Name="SearchTextBox" TextChanged="SearchTextBox_TextChanged" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,50,0,0"/>
+        <TextBox x:Name="SearchTextBox" TextChanged="SearchTextBox_TextChanged" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,93,0,0"/>
 
-        <ComboBox x:Name="GenderComboBox" SelectionChanged="GenderComboBox_SelectionChanged" Width="200" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,50,20,0" />
+        <TextBlock Text="Пол:" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,50,190,0"/>
+        <ComboBox x:Name="GenderComboBox" SelectionChanged="GenderComboBox_SelectionChanged" Width="200" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,65,10,0" />
 
-        <ComboBox x:Name="BirthdayComboBox" Width="200" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,90,20,0" SelectionChanged="BirthdayComboBox_SelectionChanged">
+        <TextBlock Text="Месяц рождения:" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,110,130,0"/>
+        <ComboBox x:Name="BirthdayComboBox" Width="200" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,125,10,0" SelectionChanged="BirthdayComboBox_SelectionChanged">
             <ComboBoxItem Content="Показать всех клиентов" />
             <ComboBoxItem Content="Показать дни рождения в этом месяце" />
         </ComboBox>
-                
-        <ComboBox x:Name="SortComboBox" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,90,0,0" SelectedIndex="0">
+
+        <ComboBox x:Name="SortComboBox" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,133,0,0" SelectedIndex="0">
             <ComboBoxItem Content="Фамилия (А-Я)" />
             <ComboBoxItem Content="Дата последнего посещения (новые)" />
             <ComboBoxItem Content="Количество посещений (по убыванию)" />
         </ComboBox>
-        <Button x:Name="SortButton" Content="Сортировать" Width="100" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="230,90,0,0" Click="SortButton_Click" />
-        
-        <DataGrid x:Name="dataClient" AutoGenerateColumns="False" HorizontalAlignment="Center" Height="250" VerticalAlignment="Top" Width="800" Margin="0,130,0,0">
+
+        <Button x:Name="SortButton" Content="Сортировать" Width="100" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="225,133,0,0" Click="SortButton_Click" 
+                Background="#FF4A6D" Foreground="Black" />
+
+        <DataGrid x:Name="dataClient" Background="#FFE1E4FF" AutoGenerateColumns="False" HorizontalAlignment="Center" Height="250" VerticalAlignment="Top" Width="800" Margin="0,174,0,0">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Path=id}" Width="*" />
                 <DataGridTextColumn Header="Пол" Binding="{Binding Path=gender}" Width="*" />
@@ -43,8 +52,10 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button x:Name="AddClientButton" Content="Добавить клиента" Width="120" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,10,0,0" Click="AddClientButton_Click"/>
-        <Button x:Name="EditClientButton" Content="Редактировать клиента" Width="150" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="150,10,0,0" Click="EditClientButton_Click"/>
-        
+        <Button x:Name="AddClientButton" Content="Добавить клиента" Width="120" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,53,0,0" Click="AddClientButton_Click" 
+                Background="#FF4A6D" Foreground="Black" />
+
+        <Button x:Name="EditClientButton" Content="Редактировать клиента" Width="150" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="145,53,0,0" Click="EditClientButton_Click" 
+                Background="#FF4A6D" Foreground="Black" />
     </Grid>
 </Window>

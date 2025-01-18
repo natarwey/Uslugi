@@ -6,7 +6,10 @@
         xmlns:local="clr-namespace:Uslugi"
         mc:Ignorable="d"
         Title="Форма клиента" Height="450" Width="400"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner"
+        FontFamily="Tahoma"
+        Background="#FFE1E4FF">
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -54,6 +57,7 @@
             <RadioButton x:Name="FemaleRadioButton" Content="Женский" Margin="5"/>
         </StackPanel>
 
-        <Button x:Name="SaveButton" Content="Сохранить" Grid.Row="10" Grid.Column="1" Margin="5" HorizontalAlignment="Right" Width="100" Click="SaveButton_Click"/>
+        <Button x:Name="SaveButton" Content="Сохранить" Grid.Row="10" Grid.Column="1" Margin="5" HorizontalAlignment="Right" Width="100" 
+                Background="#FF4A6D" Foreground="Black" Click="SaveButton_Click"/>
     </Grid>
 </Window>
